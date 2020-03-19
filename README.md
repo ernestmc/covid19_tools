@@ -1,0 +1,1 @@
+A python tool to read data from the covid19 database and obtain statistics by country.
