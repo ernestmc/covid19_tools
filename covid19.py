@@ -36,7 +36,7 @@ class Covid19Reader(object):
 
     def __init__(self, url=None):
         if not url:
-            data_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+            data_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
         else:
             data_url = url
         data = urlopen(data_url)
@@ -58,12 +58,13 @@ class Covid19Reader(object):
 
 
 test = Covid19Reader()
-data = test.get_country_data("Argentina")
+country = "Argentina"
+data = test.get_country_data(country)
 print data
 
 start = 35
 plt.plot(data["infected"][start:])
-plt.title("Casos confirmados de Covid19 en Argentina")
+plt.title("Casos confirmados de Covid19 en %s" % country)
 plt.xlabel("Fecha en dias desde el %s" % data["dates"][start])
 plt.ylabel("Infectados")
 plt.show()
