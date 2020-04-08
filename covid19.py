@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from urllib import urlopen
 import csv
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Covid19Reader(object):
@@ -53,18 +54,20 @@ class Covid19Reader(object):
         """ Return a data vector for a specified country """
         for row in self.country_data:
             if row[self.FIELD_COLUMNS["Country"]] == country:
-                return {"dates": self.dates, "infected": row[self.FIELD_COLUMNS["Start date"]:]}
+                return {"dates": self.dates, "infected": [int(i) for i in row[self.FIELD_COLUMNS["Start date"]:]]}
         return None
 
 
 test = Covid19Reader()
-country = "Argentina"
+country = "Italy"
 data = test.get_country_data(country)
 print data
 
-start = 35
-plt.plot(data["infected"][start:])
+infected = data["infected"]
+nonzero = np.nonzero(infected)
+start = nonzero[0][0] if nonzero else 0
+plt.plot(infected[start:])
 plt.title("Casos confirmados de Covid19 en %s" % country)
-plt.xlabel("Fecha en dias desde el %s" % data["dates"][start])
+plt.xlabel("Dias desde el primer caso (%s)" % data["dates"][start])
 plt.ylabel("Infectados")
 plt.show()
