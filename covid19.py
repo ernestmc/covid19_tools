@@ -20,6 +20,7 @@ from urllib import urlopen
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 
 class Covid19Reader(object):
@@ -59,7 +60,11 @@ class Covid19Reader(object):
 
 
 test = Covid19Reader()
-country = "Italy"
+
+if len(sys.argv) > 1:
+    country = sys.argv[1]
+else:
+    country = "Argentina"
 data = test.get_country_data(country)
 print data
 
